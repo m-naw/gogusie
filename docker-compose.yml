@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  php:
+    build: ./var/docker/php
+    ports:
+      - '9000:9000'
+    volumes:
+      - './:/var/www/gog:cached'
+      - 'composer-cache:/root/.composer'
+
+  nginx:
+    build: ./var/docker/nginx
+    working_dir: /var/www/gog
+    ports:
+      - '80:80'
+    volumes:
+      - './public:/var/www/gog/public:delegated'
+    depends_on:
+      - php
+
+volumes:
+  composer-cache:

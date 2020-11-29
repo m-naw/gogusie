@@ -1,0 +1,15 @@
+product_1:
+  title: 'Fallout'
+  price: 199
+product_2:
+  title: "Don't Starve"
+  price: 299
+product_3:
+  title: "Baldur's Gate"
+  price: 399
+product_4:
+  title: 'Icewind Dale'
+  price: 499
+product_5:
+  title: 'Bloodborne'
+  price: 599
