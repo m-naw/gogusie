@@ -26,7 +26,7 @@ class ProductController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/products/{id}", name="api_product_delete")
+     * @Rest\Delete("/products/{id}", name="api_product_delete", requirements={"id"="\d+"})
      * @ParamConverter("product", class="Gog:Product")
      */
     public function deleteAction(Product $product)
@@ -64,7 +64,7 @@ class ProductController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Put("/products/{id}", name="api_product_update")
+     * @Rest\Put("/products/{id}", name="api_product_update", requirements={"id"="\d+"})
      * @ParamConverter("product", class="Gog:Product")
      */
     public function updateAction(Product $product, Request $request)

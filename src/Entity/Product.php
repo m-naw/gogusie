@@ -25,6 +25,7 @@ class Product
 
     /**
      * @Assert\NotBlank(groups={"api_create"})
+     * @Assert\Length(min=1, max=255, groups={"api_create", "api_update"})
      *
      * @ORM\Column(type="string", nullable=false, unique=true)
      */

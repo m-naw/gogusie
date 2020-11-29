@@ -47,12 +47,16 @@ class CartController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete("/carts/{cartId}/product/{productId}", name="api_cart_remove_product")
+     * @Rest\Delete("/carts/{cartId}/product/{productId}",
+     *     name="api_cart_remove_product",
+     *     requirements={"cartId"="\d+", "productId"="\d+"}
+     * )
      * @ParamConverter("cartProduct",
-     *                  class="Gog:CartProduct",
-     *                  options={"mapping" : {"cartId" : "cartId", "productId" : "productId"},
-     *                  "map_method_signature" = true,
-     *                  "repository_method" : "findOneByCartAndProduct"})
+     *     class="Gog:CartProduct",
+     *     options={"mapping" : {"cartId" : "cartId", "productId" : "productId"},
+     *     "map_method_signature" = true,
+     *     "repository_method" : "findOneByCartAndProduct"}
+     * )
      */
     public function removeProductAction(CartProduct $cartProduct)
     {
@@ -64,13 +68,18 @@ class CartController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post("/carts/{cartId}/product/{productId}", name="api_cart_add_product")
+     * @Rest\Post("/carts/{cartId}/product/{productId}",
+     *     name="api_cart_add_product",
+     *     requirements={"cartId"="\d+", "productId"="\d+"}
+     * )
      * @ParamConverter("cart",
-     *                  class="Gog:Cart",
-     *                  options={"id" = "cartId"})
+     *     class="Gog:Cart",
+     *     options={"id" = "cartId"}
+     * )
      * @ParamConverter("product",
-     *                  class="Gog:Product",
-     *                  options={"id" = "productId"})
+     *     class="Gog:Product",
+     *     options={"id" = "productId"}
+     * )
      */
     public function addProductAction(Cart $cart, Product $product)
     {

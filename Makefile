@@ -14,6 +14,14 @@ help: ## Makefile help
 
 .DEFAULT_GOAL := help
 
+up: ## Inits docker containers
+	docker-compose up -d
+
+down: ## Destroys docker containers
+	docker-compose down
+
+up-and-build: up build ## Inits docker containers and builds project
+
 clear-cache: ## Clears symfony cache for current environment
 	docker-compose exec php bin/console cache:clear --env=$(APP_ENV)
 
@@ -21,7 +29,7 @@ composer-install: ## Installs composer dependencies
 	docker-compose exec php composer install
 
 drop-database: ## Drops main database
-	docker-compose exec php rm -Rf var/data.db
+	docker-compose exec php rm -Rf var/data-$(APP_ENV).db
 
 create-database: ## Creates main database
 	docker-compose exec php bin/console doctrine:database:create --env=$(APP_ENV)
@@ -49,10 +57,10 @@ check-security: ## Checks for known security vulnerabilities in dependencies
 
 check-code: phpcsfixer-dry check-security ## Executes all check on code
 
-tests-phpunit: fix-permissions ## Executes phpunit tests in test environment
-	docker-compose exec php APP_ENV=test vendor/bin/phpunit
+tests-phpunit: ## Executes phpunit tests in test environment
+	docker-compose exec php vendor/bin/phpunit
 
-tests-phpspec: fix-permissions ## Executes phpspec tests
+tests-phpspec: ## Executes phpspec tests
 	docker-compose exec php vendor/bin/phpspec run -n
 
 tests-all: tests-phpunit tests-phpspec check-code ## Executes all tests and checks
