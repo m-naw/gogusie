@@ -30,6 +30,14 @@ class ProductControllerTest extends WebTestCase
         $data = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertCount(2, $data);
+
+        $client->request('GET', '/api/products?page=1&limit=4');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertCount(3, $data);
     }
 
     public function testCreateProduct()
@@ -51,6 +59,11 @@ class ProductControllerTest extends WebTestCase
         $this->assertEquals('Cyberpunk 2077', $data['title']);
         $this->assertEquals(19900, $data['priceAmount']);
         $this->assertEquals('USD', $data['priceCurrency']);
+    }
+
+    public function testCreateProductWithError()
+    {
+        $client = static::createClient();
 
         $input = [
             'title' => 'Cyberpunk 2077',
@@ -152,6 +165,11 @@ class ProductControllerTest extends WebTestCase
         $this->assertEquals('Cyberpunk 2077', $data['title']);
         $this->assertEquals(19900, $data['priceAmount']);
         $this->assertEquals('USD', $data['priceCurrency']);
+    }
+
+    public function testUpdateProductWithError()
+    {
+        $client = static::createClient();
 
         $input = [
             'title' => 'Fallout',
@@ -186,9 +204,30 @@ class ProductControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
+        $client->request('POST', '/api/carts/1/product/6');
+
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(3, count($data['products']));
+
         $client->request('DELETE', '/api/products/6');
 
         $this->assertEquals(204, $client->getResponse()->getStatusCode());
+
+        $client->request('GET', '/api/carts/1');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals(2, count($data['products']));
+    }
+
+    public function testRemoveProductWithError()
+    {
+        $client = static::createClient();
 
         $client->request('DELETE', '/api/products/1');
 

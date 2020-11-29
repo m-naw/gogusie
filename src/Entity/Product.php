@@ -2,6 +2,8 @@
 
 namespace Gog\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gog\Model\Money;
 use JMS\Serializer\Annotation as JMS;
@@ -56,11 +58,19 @@ class Product
      */
     private bool $removable;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Gog\Entity\CartProduct", mappedBy="product", cascade={"remove"})
+     *
+     * @JMS\Exclude
+     */
+    private ?Collection $cartProducts;
+
     public function __construct()
     {
         $this->title = '';
         $this->priceCurrency = self::DEFAULT_CURRENCY;
         $this->removable = true;
+        $this->cartProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +111,16 @@ class Product
     public function setRemovable(bool $removable): void
     {
         $this->removable = $removable;
+    }
+
+    public function getCartProducts(): ?Collection
+    {
+        return $this->cartProducts;
+    }
+
+    public function setCartProducts(?Collection $cartProducts): void
+    {
+        $this->cartProducts = $cartProducts;
     }
 
     public function getPrice(): ?Money

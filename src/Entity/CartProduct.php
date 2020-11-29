@@ -27,7 +27,7 @@ class CartProduct
     private Cart $cart;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Gog\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Gog\Entity\Product", inversedBy="cartProducts")
      * @ORM\JoinColumn(name="id_product", referencedColumnName="id")
      *
      * @JMS\Type("Gog\Entity\Product")
