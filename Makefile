@@ -63,8 +63,6 @@ tests-phpunit: ## Executes phpunit tests in test environment
 tests-phpspec: ## Executes phpspec tests
 	docker-compose exec php vendor/bin/phpspec run -n
 
-tests-all: tests-phpunit tests-phpspec check-code ## Executes all tests and checks
-
-tests-phpunit-with-build: build tests-phpunit ## Rebuild whole project, reload data and run tests
+tests-all-with-build: build tests-phpunit tests-phpspec ## Rebuild whole project, reload data and run tests
 
 

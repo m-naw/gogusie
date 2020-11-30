@@ -21,7 +21,7 @@ final class Money
         return $this->amount;
     }
 
-    public function setMoney(int $amount): void
+    public function setAmount(int $amount): void
     {
         $this->amount = $amount;
     }

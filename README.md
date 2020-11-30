@@ -15,7 +15,7 @@ make up-and-build
 To run tests
 
 ```bash
-make tests-phpunit-with-build symfonycnf=".env.test"
+make tests-all-with-build symfonycnf=".env.test"
 ```
 
 For more available commands check

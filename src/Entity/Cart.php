@@ -24,7 +24,7 @@ class Cart
     private ?int $id = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Gog\Entity\CartProduct", mappedBy="cart")
+     * @ORM\OneToMany(targetEntity="Gog\Entity\CartProduct", mappedBy="cart", cascade={"remove"})
      *
      * @JMS\Exclude
      */
@@ -38,7 +38,6 @@ class Cart
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
-        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,12 +65,10 @@ class Cart
      * @JMS\SerializedName("products")
      * @JMS\Type("ArrayCollection<Gog\Model\DTO\CartProductDTO>")
      */
-    public function getProducts(): ?ArrayCollection
+    public function getProducts(): ArrayCollection
     {
         if (null === $this->products) {
             $this->products = new ArrayCollection();
-
-            //$productIds = [];
 
             foreach ($this->cartProducts as $cartProduct) {
                 $filteredProducts = $this->products->filter(function (CartProductDTO $cartProductDTO) use ($cartProduct) {
