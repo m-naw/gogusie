@@ -1,4 +1,4 @@
-## Requirements
+## System requirements
 
 - docker
 - docker-compose
@@ -6,7 +6,7 @@
 
 ## Setup
 
-Stop all containers which run on port 80 and run:
+Stop all containers which use port 80 and run:
 
 ```bash
 make up-and-build
